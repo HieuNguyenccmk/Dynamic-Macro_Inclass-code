@@ -1,0 +1,49 @@
+%% File Info.
+
+%{
+    my_graph.m
+    ----------
+    This code plots the value and policy functions.
+%}
+
+%% Graph class.
+
+classdef my_graph
+    methods(Static)
+        %% Plot value and policy functions.
+        
+        function [] = plot_policy(par, sol, figout)
+            %% Grid for time (ages)
+            tgrid = 1:par.T;
+
+            %% Plot consumption policy function.
+            figure(1)
+            plot(tgrid, sol.c, 'LineWidth', 1.5);
+            xlabel({'Age $t$'}, 'Interpreter', 'latex');
+            ylabel({'Consumption $c(t)$'}, 'Interpreter', 'latex');
+            title('Consumption Policy Function');
+            legend(arrayfun(@(x) sprintf('$a = %.2f$', x), par.agrid, 'UniformOutput', false), 'Interpreter', 'latex');
+            grid on;
+            savefig(strcat(figout, 'consumption.fig'));
+
+            %% Plot savings policy function.
+            figure(2)
+            plot(tgrid, sol.a, 'LineWidth', 1.5);
+            xlabel({'Age $t$'}, 'Interpreter', 'latex');
+            ylabel({'Savings $a(t+1)$'}, 'Interpreter', 'latex');
+            title('Savings Policy Function');
+            legend(arrayfun(@(x) sprintf('$a = %.2f$', x), par.agrid, 'UniformOutput', false), 'Interpreter', 'latex');
+            grid on;
+            savefig(strcat(figout, 'savings.fig'));
+
+            %% Plot value function.
+            figure(3)
+            plot(tgrid, sol.v, 'LineWidth', 1.5);
+            xlabel({'Age $t$'}, 'Interpreter', 'latex');
+            ylabel({'Value Function $V_t$'}, 'Interpreter', 'latex');
+            title('Value Function');
+            grid on;
+            savefig(strcat(figout, 'value_function.fig'));
+        end
+    end
+end
